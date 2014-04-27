@@ -12,7 +12,7 @@ namespace laba1
         public Form1()
         {
             InitializeComponent();
-            Thread GetOtvet = new Thread(WhoThis.OtvetEvent);
+            Thread GetOtvet = new Thread(WhoThis.AnswerEvent);
             GetOtvet.IsBackground = true;
             GetOtvet.Start();
 

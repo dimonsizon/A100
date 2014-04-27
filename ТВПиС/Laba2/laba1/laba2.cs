@@ -47,9 +47,7 @@ namespace laba1
         {
            // udp.Close();
         }
-        /// <summary>
-        /// послать сообщение в эфир
-        /// </summary>
+
         public static void SendEvent()
         {
             try
@@ -58,7 +56,6 @@ namespace laba1
                 udp.Send(data, data.Length, ep);
                 udp.Send(data, data.Length, ep);
                 udp.Send(data, data.Length, ep);
-                //richTextBoxLog.Text += "найден клиент:" + RemoteIpEndPoint.Address.ToString() + ":" + returnData.ToString() + "\n";
             }
             catch (Exception ex)
             {
@@ -66,21 +63,15 @@ namespace laba1
             }
         }
 
-        /// <summary>
-        /// ожидать ответ
-        /// </summary>
-        public static void OtvetEvent()
+        public static void AnswerEvent()
         {
             try
             {
                 for (; ; )
                 {
-                   
                     Byte[] receiveBytes = udp.Receive(ref RemoteIpEndPoint);
-
                     string returnData = Encoding.UTF8.GetString(receiveBytes);
                     FullIpList.Add(new ServerIpAdress(RemoteIpEndPoint.Address.ToString(), returnData.ToString() ) );
-                    //MessageBox.Show("найден клиент:" + RemoteIpEndPoint.Address.ToString() + ":" + returnData.ToString() + "\n");
                 }
             }
             catch (Exception ex)
@@ -128,23 +119,18 @@ namespace laba1
                 sender.Send(Encoding.UTF8.GetBytes(matrix.Matrix_A_x.ToString()+";"+matrix.Matrix_A_y.ToString()));
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
-                //Thread.Sleep(100);
                 sender.Send(Encoding.UTF8.GetBytes(matrix.Matrix_B_x.ToString() + ";" + matrix.Matrix_B_y.ToString()));
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
                 sender.Send(Encoding.UTF8.GetBytes( matrixString.MatrixToString(1) ) );
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
-                //Thread.Sleep(100);
                 sender.Send(Encoding.UTF8.GetBytes(matrixString.MatrixToString(2)));
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
                 
-                
-                
                 //Ура, вродь работает, теперь передаем x,y ячейки - и ждем результат. пока не закончатся ячейки
                 int[] xy = new int[3];
-
 
                 for (; ; )
                 {
@@ -167,7 +153,6 @@ namespace laba1
                             matrix.StopPotok++;
                             
                         }
-                        //послать <END>
                         sender.Send(Encoding.UTF8.GetBytes( "<END>" ));
 
                         break;
@@ -185,24 +170,12 @@ namespace laba1
 
                 }
 
-
-                    //byte[] msgByte = Encoding.UTF8.GetBytes(theMessage);
-
-                    //sender.Send(msgByte);
-
-                    //ответ
-                    //int byteOtvet = sender.Receive(bytes);
-
-                    //Encoding.UTF8.GetString(bytes, 0, byteOtvet);
-
-                    //закрытие
                 sender.Shutdown(SocketShutdown.Both);
                 sender.Close();
                 sender.Dispose();
             }
             catch(Exception e)
             {
-                //Console.WriteLine("Исключение " + e.ToString());
                 MessageBox.Show("Исключение " + e.ToString());
             }
 
@@ -252,6 +225,4 @@ namespace laba1
         }
 
     }
-
-    
 }
