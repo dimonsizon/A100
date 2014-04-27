@@ -1,0 +1,20 @@
+E:\Threads2\laba1\bin\Debug\laba1.exe.config
+E:\Threads2\laba1\bin\Debug\laba1.exe
+E:\Threads2\laba1\bin\Debug\laba1.pdb
+E:\Threads2\laba1\obj\x86\Debug\laba1.Form1.resources
+E:\Threads2\laba1\obj\x86\Debug\laba1.Properties.Resources.resources
+E:\Threads2\laba1\obj\x86\Debug\laba1.csproj.GenerateResource.Cache
+E:\Threads2\laba1\obj\x86\Debug\laba1.exe
+E:\Threads2\laba1\obj\x86\Debug\laba1.pdb
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\laba1\bin\Debug\laba1.exe.config
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\laba1\obj\x86\Debug\laba1.exe
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\laba1\obj\x86\Debug\laba1.pdb
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\laba1\bin\Debug\laba1.exe
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\laba1\bin\Debug\laba1.pdb
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\laba1\obj\x86\Debug\laba1.csprojResolveAssemblyReference.cache
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\laba1\obj\x86\Debug\laba1.Form1.resources
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\laba1\obj\x86\Debug\laba1.Properties.Resources.resources
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\laba1\obj\x86\Debug\laba1.csproj.GenerateResource.Cache
+C:\Users\user\Учеба\4 курс\8 семестр\ТВПиС\Моя лаба\Threads2!\laba1\bin\Debug\laba1.exe.config
+C:\Users\user\Учеба\4 курс\8 семестр\ТВПиС\Моя лаба\Threads2!\laba1\obj\x86\Debug\laba1.exe
+C:\Users\user\Учеба\4 курс\8 семестр\ТВПиС\Моя лаба\Threads2!\laba1\obj\x86\Debug\laba1.pdb

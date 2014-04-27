@@ -1,0 +1,14 @@
+E:\Threads2\ConsoleClient\bin\Debug\ConsoleServer.exe
+E:\Threads2\ConsoleClient\bin\Debug\ConsoleServer.pdb
+E:\Threads2\ConsoleClient\obj\x86\Debug\ConsoleServer.exe
+E:\Threads2\ConsoleClient\obj\x86\Debug\ConsoleServer.pdb
+E:\Threads2\ConsoleClient\obj\x86\Debug\ConsoleClient.csprojResolveAssemblyReference.cache
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\ConsoleClient\obj\x86\Debug\ConsoleServer.exe
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\ConsoleClient\obj\x86\Debug\ConsoleServer.pdb
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\ConsoleClient\bin\Debug\ConsoleServer.exe
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\ConsoleClient\bin\Debug\ConsoleServer.pdb
+C:\Users\user\Учеба\4 курс\8 семестр\!Лена Ярошенко\ТВПиС\Threads2!\Threads2!\ConsoleClient\obj\x86\Debug\ConsoleClient.csprojResolveAssemblyReference.cache
+C:\Users\user\Учеба\4 курс\8 семестр\ТВПиС\Моя лаба\Threads2!\ConsoleClient\obj\x86\Debug\ConsoleServer.exe
+C:\Users\user\Учеба\4 курс\8 семестр\ТВПиС\Моя лаба\Threads2!\ConsoleClient\obj\x86\Debug\ConsoleServer.pdb
+C:\Users\user\Repository\A100\ТВПиС\Laba2\ConsoleClient\obj\x86\Debug\ConsoleServer.exe
+C:\Users\user\Repository\A100\ТВПиС\Laba2\ConsoleClient\obj\x86\Debug\ConsoleServer.pdb
