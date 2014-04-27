@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Threading;
 
-namespace lab2
+namespace Lab2
 {
     using System.Windows.Forms.DataVisualization.Charting;
 
@@ -31,17 +31,17 @@ namespace lab2
             {
                 buttonRun.Enabled = false;
 
-                matrix.Matrix_A_x = Convert.ToUInt32(textBoxAx.Text);
-                matrix.Matrix_A_y = Convert.ToUInt32(textBoxAy.Text);
-                matrix.Matrix_B_x = Convert.ToUInt32(textBoxBx.Text);
-                matrix.Matrix_B_y = Convert.ToUInt32(textBoxBy.Text);
+                Matrix.Matrix_A_x = Convert.ToUInt32(textBoxAx.Text);
+                Matrix.Matrix_A_y = Convert.ToUInt32(textBoxAy.Text);
+                Matrix.Matrix_B_x = Convert.ToUInt32(textBoxBx.Text);
+                Matrix.Matrix_B_y = Convert.ToUInt32(textBoxBy.Text);
 
-                matrix.Random_min = 0;
-                matrix.Random_max = 10;
+                Matrix.Random_min = 0;
+                Matrix.Random_max = 10;
 
-                //matrix.Potok_Count_Screen = Convert.ToUInt32(textBoxMaxPotok.Text);
+                //Matrix.Potok_Count_Screen = Convert.ToUInt32(textBoxMaxPotok.Text);
 
-                matrix Work = new matrix();
+                Matrix Work = new Matrix();
                 Work.instal();
 
                 Thread GlobalThread = new Thread(Work.MenegerPotokov);
@@ -64,9 +64,9 @@ namespace lab2
                 Series plot = MyChart.Series[0];
                 plot.Points.Clear();
 
-                for (int i = 0; i < matrix.Potok_Count_Real; i++)
+                for (int i = 0; i < Matrix.Potok_Count_Real; i++)
                 {
-                    plot.Points.AddXY(i + 1, matrix.TimePotok[i]);
+                    plot.Points.AddXY(i + 1, Matrix.TimePotok[i]);
                 }
 
                 buttonRun.Enabled = true;
@@ -111,7 +111,7 @@ namespace lab2
                         richTextBoxServerList.Text += WhoThis.FindIpList[i].Ip + "\n";
                         CountClient++;
                     }
-                    matrix.Potok_Count_Screen = CountClient;
+                    Matrix.Potok_Count_Screen = CountClient;
                 }
             }
 

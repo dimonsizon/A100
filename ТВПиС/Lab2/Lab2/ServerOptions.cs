@@ -93,7 +93,7 @@ namespace Lab2
             int ByteRec = 0;
             String Data = null;            //начало
 
-            matrix.wait.WaitOne();
+            Matrix.wait.WaitOne();
 
             try
             {
@@ -115,16 +115,16 @@ namespace Lab2
 
 
                 //послать размер матрицы A и В
-                sender.Send(Encoding.UTF8.GetBytes(matrix.Matrix_A_x.ToString() + ";" + matrix.Matrix_A_y.ToString()));
+                sender.Send(Encoding.UTF8.GetBytes(Matrix.Matrix_A_x.ToString() + ";" + Matrix.Matrix_A_y.ToString()));
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
-                sender.Send(Encoding.UTF8.GetBytes(matrix.Matrix_B_x.ToString() + ";" + matrix.Matrix_B_y.ToString()));
+                sender.Send(Encoding.UTF8.GetBytes(Matrix.Matrix_B_x.ToString() + ";" + Matrix.Matrix_B_y.ToString()));
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
-                sender.Send(Encoding.UTF8.GetBytes(matrixString.MatrixToString(1)));
+                sender.Send(Encoding.UTF8.GetBytes(MatrixString.MatrixToString(1)));
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
-                sender.Send(Encoding.UTF8.GetBytes(matrixString.MatrixToString(2)));
+                sender.Send(Encoding.UTF8.GetBytes(MatrixString.MatrixToString(2)));
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
 
@@ -135,21 +135,21 @@ namespace Lab2
                 {
                     Flags.GetNewData.WaitOne(); // ставим блок мьютиксом
 
-                    xy = matrix.NextMatrixData();
+                    xy = Matrix.NextMatrixData();
 
                     Flags.GetNewData.ReleaseMutex(); //освобождаем мьютикс
 
                     if (xy[2] == 1)
                     {
-                        if (matrix.VsegoPotok == matrix.StopPotok)
+                        if (Matrix.VsegoPotok == Matrix.StopPotok)
                         {
-                            matrix.waitAllPotok.Set();
-                            matrix.NextMatrixData_null();
+                            Matrix.waitAllPotok.Set();
+                            Matrix.NextMatrixData_null();
 
                         }
                         else
                         {
-                            matrix.StopPotok++;
+                            Matrix.StopPotok++;
 
                         }
                         sender.Send(Encoding.UTF8.GetBytes("<END>"));
@@ -164,7 +164,7 @@ namespace Lab2
                         //ожидать результат:
                         ByteRec = sender.Receive(bytes);
                         Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
-                        matrix.MatrixData_C[xy[0], xy[1]] = Convert.ToInt32(Data);
+                        Matrix.MatrixData_C[xy[0], xy[1]] = Convert.ToInt32(Data);
                     }
 
                 }
@@ -178,7 +178,7 @@ namespace Lab2
                 MessageBox.Show("Исключение " + e.ToString());
             }
 
-            matrix.waitAllPotok.Set();
+            Matrix.waitAllPotok.Set();
         }
 
         public static int returnServerID = 0;
@@ -190,7 +190,7 @@ namespace Lab2
         }
 
     }
-    public class matrixString
+    public class MatrixString
     {
 
         public static string MatrixToString(int nomer)
@@ -199,11 +199,11 @@ namespace Lab2
 
             if (nomer == 1)
             {
-                for (int i = 0; i < matrix.Matrix_A_x; i++)
+                for (int i = 0; i < Matrix.Matrix_A_x; i++)
                 {
-                    for (int j = 0; j < matrix.Matrix_A_y; j++)
+                    for (int j = 0; j < Matrix.Matrix_A_y; j++)
                     {
-                        bufer += matrix.MatrixData_A[i, j].ToString() + ";";
+                        bufer += Matrix.MatrixData_A[i, j].ToString() + ";";
                     }
                 }
 
@@ -211,11 +211,11 @@ namespace Lab2
             }
             else
             {
-                for (int i = 0; i < matrix.Matrix_B_x; i++)
+                for (int i = 0; i < Matrix.Matrix_B_x; i++)
                 {
-                    for (int j = 0; j < matrix.Matrix_B_y; j++)
+                    for (int j = 0; j < Matrix.Matrix_B_y; j++)
                     {
-                        bufer += matrix.MatrixData_B[i, j].ToString() + ";";
+                        bufer += Matrix.MatrixData_B[i, j].ToString() + ";";
                     }
                 }
                 return bufer;

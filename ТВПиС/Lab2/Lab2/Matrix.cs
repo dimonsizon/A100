@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace laba1
+namespace Lab2
 {
     public class Flags
     {
