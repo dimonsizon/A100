@@ -1,0 +1,6 @@
+C:\Users\Alexander\Documents\Visual Studio 2013\Projects\A100\ТВПиС\Lab2\ConsoleClient\bin\Debug\ConsoleClient.exe.config
+C:\Users\Alexander\Documents\Visual Studio 2013\Projects\A100\ТВПиС\Lab2\ConsoleClient\bin\Debug\ConsoleClient.exe
+C:\Users\Alexander\Documents\Visual Studio 2013\Projects\A100\ТВПиС\Lab2\ConsoleClient\bin\Debug\ConsoleClient.pdb
+C:\Users\Alexander\Documents\Visual Studio 2013\Projects\A100\ТВПиС\Lab2\ConsoleClient\obj\Debug\ConsoleClient.csprojResolveAssemblyReference.cache
+C:\Users\Alexander\Documents\Visual Studio 2013\Projects\A100\ТВПиС\Lab2\ConsoleClient\obj\Debug\ConsoleClient.exe
+C:\Users\Alexander\Documents\Visual Studio 2013\Projects\A100\ТВПиС\Lab2\ConsoleClient\obj\Debug\ConsoleClient.pdb
