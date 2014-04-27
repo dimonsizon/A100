@@ -24,7 +24,7 @@ namespace Lab2
     public class WhoThis
     {
         public static IPAddress ip = IPAddress.Broadcast;
-        public static int remport = 65000;//порт кому
+        public static int remport = 65000;//порт  кому
         public static int locport = 65001;//порт от кого/клиент
         public static IPEndPoint ep = new IPEndPoint(ip, remport);
         public static UdpClient udp = new UdpClient(locport);
