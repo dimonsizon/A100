@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Lab2
 {
-    public class ServerIpAdress
+    public class ClientIpAddress
     {
-        public ServerIpAdress(String I, String P)
+        public ClientIpAddress(String I, String P)
         {
             Ip = I;
             Port = P;
@@ -24,36 +24,24 @@ namespace Lab2
     public class WhoThis
     {
         public static IPAddress ip = IPAddress.Broadcast;
-        public static int remport = 65000;//порт  кому
-        public static int locport = 65001;//порт от кого/клиент
-        public static IPEndPoint ep = new IPEndPoint(ip, remport);
-        public static UdpClient udp = new UdpClient(locport);
-        public static string txtText = "Есть кто?";
+        public static int toPort = 65000;//порт  кому
+        public static int fromPort = 65001;//порт от кого/клиент
+        public static IPEndPoint ep = new IPEndPoint(ip, toPort);
+        public static UdpClient udp = new UdpClient(fromPort);
+        public static string txtText = "Test connection...";
         public static byte[] data = Encoding.UTF8.GetBytes(txtText);
         public static IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
-        public static List<ServerIpAdress> FullIpList = new List<ServerIpAdress>();
+        public static List<ClientIpAddress> FullIpList = new List<ClientIpAddress>();
         /// <summary>
-        /// список ip доступных серверов
+        /// список ip доступных клиентов
         /// </summary>
-        public static List<ServerIpAdress> FindIpList = new List<ServerIpAdress>();
-
-        ~WhoThis()
-        {
-            udp.Close();
-        }
-        public static void Close()
-        {
-            // udp.Close();
-        }
+        public static List<ClientIpAddress> FindIpList = new List<ClientIpAddress>();
 
         public static void SendEvent()
         {
             try
             {
-                //пошлем 3 раза ;)
-                udp.Send(data, data.Length, ep);
-                udp.Send(data, data.Length, ep);
                 udp.Send(data, data.Length, ep);
             }
             catch (Exception ex)
@@ -66,11 +54,11 @@ namespace Lab2
         {
             try
             {
-                for (; ; )
+                while (true)
                 {
                     Byte[] receiveBytes = udp.Receive(ref RemoteIpEndPoint);
                     string returnData = Encoding.UTF8.GetString(receiveBytes);
-                    FullIpList.Add(new ServerIpAdress(RemoteIpEndPoint.Address.ToString(), returnData.ToString()));
+                    FullIpList.Add(new ClientIpAddress(RemoteIpEndPoint.Address.ToString(), returnData.ToString()));
                 }
             }
             catch (Exception ex)
@@ -93,7 +81,7 @@ namespace Lab2
             int ByteRec = 0;
             String Data = null;            //начало
 
-            Matrix.wait.WaitOne();
+            Matrix.startEvent.WaitOne();
 
             try
             {
@@ -109,16 +97,12 @@ namespace Lab2
 
                 //соеденяемся
                 sender.Connect(ipEndPoint);
-                //MessageBox.Show("клиент соединился " + sender.RemoteEndPoint.ToString());
-
-                // string theMessage = "0";
-
 
                 //послать размер матрицы A и В
-                sender.Send(Encoding.UTF8.GetBytes(Matrix.Matrix_A_x.ToString() + ";" + Matrix.Matrix_A_y.ToString()));
+                sender.Send(Encoding.UTF8.GetBytes(Matrix.dimension.ToString() + ";" + Matrix.dimension.ToString()));
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
-                sender.Send(Encoding.UTF8.GetBytes(Matrix.Matrix_B_x.ToString() + ";" + Matrix.Matrix_B_y.ToString()));
+                sender.Send(Encoding.UTF8.GetBytes(Matrix.dimension.ToString() + ";" + Matrix.dimension.ToString()));
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
                 sender.Send(Encoding.UTF8.GetBytes(MatrixString.MatrixToString(1)));
@@ -128,28 +112,27 @@ namespace Lab2
                 ByteRec = sender.Receive(bytes);
                 Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
 
-                //Ура, вродь работает, теперь передаем x,y ячейки - и ждем результат. пока не закончатся ячейки
                 int[] xy = new int[3];
 
-                for (; ; )
+                while (true)
                 {
-                    Flags.GetNewData.WaitOne(); // ставим блок мьютиксом
+                    Flags.GetNewData.WaitOne(); //блокировка мьютекса
 
                     xy = Matrix.NextMatrixData();
 
-                    Flags.GetNewData.ReleaseMutex(); //освобождаем мьютикс
+                    Flags.GetNewData.ReleaseMutex(); //освобождение мьютекса
 
                     if (xy[2] == 1)
                     {
-                        if (Matrix.VsegoPotok == Matrix.StopPotok)
+                        if (Matrix.threadCount == Matrix.stopThread)
                         {
-                            Matrix.waitAllPotok.Set();
+                            Matrix.stopEvent.Set();
                             Matrix.NextMatrixData_null();
 
                         }
                         else
                         {
-                            Matrix.StopPotok++;
+                            Matrix.stopThread++;
 
                         }
                         sender.Send(Encoding.UTF8.GetBytes("<END>"));
@@ -178,7 +161,7 @@ namespace Lab2
                 MessageBox.Show("Исключение " + e.ToString());
             }
 
-            Matrix.waitAllPotok.Set();
+            Matrix.stopEvent.Set();
         }
 
         public static int returnServerID = 0;
@@ -193,15 +176,15 @@ namespace Lab2
     public class MatrixString
     {
 
-        public static string MatrixToString(int nomer)
+        public static string MatrixToString(int number)
         {
             String bufer = null;
 
-            if (nomer == 1)
+            if (number == 1)
             {
-                for (int i = 0; i < Matrix.Matrix_A_x; i++)
+                for (int i = 0; i < Matrix.dimension; i++)
                 {
-                    for (int j = 0; j < Matrix.Matrix_A_y; j++)
+                    for (int j = 0; j < Matrix.dimension; j++)
                     {
                         bufer += Matrix.MatrixData_A[i, j].ToString() + ";";
                     }
@@ -211,9 +194,9 @@ namespace Lab2
             }
             else
             {
-                for (int i = 0; i < Matrix.Matrix_B_x; i++)
+                for (int i = 0; i < Matrix.dimension; i++)
                 {
-                    for (int j = 0; j < Matrix.Matrix_B_y; j++)
+                    for (int j = 0; j < Matrix.dimension; j++)
                     {
                         bufer += Matrix.MatrixData_B[i, j].ToString() + ";";
                     }

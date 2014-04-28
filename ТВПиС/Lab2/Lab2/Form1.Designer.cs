@@ -104,7 +104,7 @@
             this.MyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
-            series1.Name = "миллисек";
+            series1.Name = "мсек";
             this.MyChart.Series.Add(series1);
             this.MyChart.Size = new System.Drawing.Size(365, 268);
             this.MyChart.TabIndex = 31;

@@ -149,24 +149,21 @@ namespace ConsoleServer
     public class Matrix
     {
         //размерность матриц
-        public static UInt32 Matrix_A_x = 0; //строка
-        public static UInt32 Matrix_A_y = 0; //столбец
-        public static UInt32 Matrix_B_x = 0;
-        public static UInt32 Matrix_B_y = 0;
+        public static UInt32 dimension = 0;
 
         public Int32[,] MatrixData_A;
         public Int32[,] MatrixData_B;
 
 
 
-        public void InstalRazmer(int nomer, String Data)
+        public void InstalRazmer(int number, String Data)
         {
             bool flag = true;
             String str = null;
 
             Char[] arra = Data.ToCharArray();
 
-            if (nomer == 1)
+            if (number == 1)
             {
                 for (int i = 0; i < arra.Length; i++)
                 {
@@ -178,19 +175,19 @@ namespace ConsoleServer
                     {
                         if (flag)
                         {
-                            Matrix_A_x = Convert.ToUInt32(str);
+                            dimension = Convert.ToUInt32(str);
                             str = null;
                         }
                         else
                         {
-                            Matrix_A_y = Convert.ToUInt32(str);
+                            dimension = Convert.ToUInt32(str);
                             str = null;
                         }
                         flag = false;
                     }
                     if (i == arra.Length - 1)
                     {
-                        Matrix_A_y = Convert.ToUInt32(str);
+                        dimension = Convert.ToUInt32(str);
                         str = null;
                     }
                 }
@@ -207,19 +204,19 @@ namespace ConsoleServer
                     {
                         if (flag)
                         {
-                            Matrix_B_x = Convert.ToUInt32(str);
+                            dimension = Convert.ToUInt32(str);
                             str = null;
                         }
                         else
                         {
-                            Matrix_B_y = Convert.ToUInt32(str);
+                            dimension = Convert.ToUInt32(str);
                             str = null;
                         }
                         flag = false;
                     }
                     if (i == arra.Length - 1)
                     {
-                        Matrix_B_y = Convert.ToUInt32(str);
+                        dimension = Convert.ToUInt32(str);
                         str = null;
                     }
                 }
@@ -230,20 +227,20 @@ namespace ConsoleServer
 
         public void InstalMatrixMamory()
         {
-            MatrixData_A = new Int32[Matrix_A_x, Matrix_A_y];
-            MatrixData_B = new Int32[Matrix_B_x, Matrix_B_y];
+            MatrixData_A = new Int32[dimension, dimension];
+            MatrixData_B = new Int32[dimension, dimension];
         }
 
-        public void ZapolnitMatrix(int nomer, String Data)
+        public void ZapolnitMatrix(int number, String Data)
         {
             string buf = null;
             int n = 0;
 
-            if (nomer == 1)
+            if (number == 1)
             {//a
-                for (int i = 0; i < Matrix_A_x; i++)//строка
+                for (int i = 0; i < dimension; i++)//строка
                 {
-                    for (int j = 0; j < Matrix_A_y; j++)//столбцы
+                    for (int j = 0; j < dimension; j++)//столбцы
                     {
                         while (true)
                         {
@@ -267,9 +264,9 @@ namespace ConsoleServer
             }
             else
             {//b
-                for (int i = 0; i < Matrix_B_x; i++)//строка
+                for (int i = 0; i < dimension; i++)//строка
                 {
-                    for (int j = 0; j < Matrix_B_y; j++)//столбцы
+                    for (int j = 0; j < dimension; j++)//столбцы
                     {
                         while (true)
                         {
@@ -324,7 +321,7 @@ namespace ConsoleServer
                 }
             }
 
-            for (int i = 0; i < Matrix_A_y; i++)
+            for (int i = 0; i < dimension; i++)
             {
                 c += MatrixData_A[x, i] * MatrixData_B[i, y];
             }

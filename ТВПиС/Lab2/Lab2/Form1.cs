@@ -15,35 +15,33 @@ namespace Lab2
             Thread GetResponse = new Thread(WhoThis.AnswerEvent);
             GetResponse.IsBackground = true;
             GetResponse.Start();
-
         }
 
         public static object locker = new object();
 
         private void runButton_Click(object sender, EventArgs e)
         {
-            if (WhoThis.FindIpList.Count == 0)//есть ли доступные сервера?
+            if (WhoThis.FindIpList.Count == 0)
             {
                 MessageBox.Show("Нет клиентов для вычислений!");
-
             }
             else
             {
+                try
+                {
+                    Matrix.dimension = Convert.ToUInt32(dimensionTextBox.Text);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Некорректная размерность матриц!");
+                    return;
+                }
                 runButton.Enabled = false;
-
-                Matrix.Matrix_A_x = Convert.ToUInt32(dimensionTextBox.Text);
-                Matrix.Matrix_A_y = Convert.ToUInt32(dimensionTextBox.Text);
-                Matrix.Matrix_B_x = Convert.ToUInt32(dimensionTextBox.Text);
-                Matrix.Matrix_B_y = Convert.ToUInt32(dimensionTextBox.Text);
-
-                Matrix.Random_min = 0;
-                Matrix.Random_max = 10;
-
 
                 Matrix workMatrix = new Matrix();
                 workMatrix.Generate();
 
-                Thread GlobalThread = new Thread(workMatrix.MenegerPotokov);
+                Thread GlobalThread = new Thread(workMatrix.ThreadManager);
                 GlobalThread.Start();
                 timer1.Start();
             }
@@ -63,9 +61,9 @@ namespace Lab2
                 Series plot = MyChart.Series[0];
                 plot.Points.Clear();
 
-                for (int i = 0; i < Matrix.Potok_Count_Real; i++)
+                for (int i = 0; i < Matrix.maxThreadCount; i++)
                 {
-                    plot.Points.AddXY(i + 1, Matrix.TimePotok[i]);
+                    plot.Points.AddXY(i + 1, Matrix.timeThread[i]);
                 }
 
                 runButton.Enabled = true;
@@ -74,12 +72,10 @@ namespace Lab2
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
-            //найти список доступных серверов
+            //найти список доступных клиентов
             WhoThis.SendEvent();
 
             Thread.Sleep(2500);
-            WhoThis.Close();
-
 
             lock (locker)
             {
@@ -109,17 +105,11 @@ namespace Lab2
                         richTextBoxServerList.Text += WhoThis.FindIpList[i].Ip + "\n";
                         CountClient++;
                     }
-                    Matrix.Potok_Count_Screen = CountClient;
+                    Matrix.userThreadCount = CountClient;
                 }
             }
 
         }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
 
     }
 }
