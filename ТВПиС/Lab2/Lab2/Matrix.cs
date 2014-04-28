@@ -61,7 +61,7 @@ namespace Lab2
         /// <summary>
         /// сгенерить матрицы и т п.
         /// </summary>
-        public void instal()
+        public void Generate()
         {
             //выбрать максимальное кол-во потоков
             //if (Matrix_A_x > Matrix_B_y) { Potok_Count_Real = Matrix_A_x; } else { Potok_Count_Real = Matrix_B_y; }

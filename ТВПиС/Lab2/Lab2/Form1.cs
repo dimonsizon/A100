@@ -12,15 +12,15 @@ namespace Lab2
         public Form1()
         {
             InitializeComponent();
-            Thread GetOtvet = new Thread(WhoThis.AnswerEvent);
-            GetOtvet.IsBackground = true;
-            GetOtvet.Start();
+            Thread GetResponse = new Thread(WhoThis.AnswerEvent);
+            GetResponse.IsBackground = true;
+            GetResponse.Start();
 
         }
-        //public static Button p;
-        public string s = "";
 
-        private void buttonRun_Click(object sender, EventArgs e)
+        public static object locker = new object();
+
+        private void runButton_Click(object sender, EventArgs e)
         {
             if (WhoThis.FindIpList.Count == 0)//есть ли доступные сервера?
             {
@@ -29,22 +29,21 @@ namespace Lab2
             }
             else
             {
-                buttonRun.Enabled = false;
+                runButton.Enabled = false;
 
-                Matrix.Matrix_A_x = Convert.ToUInt32(textBoxAx.Text);
-                Matrix.Matrix_A_y = Convert.ToUInt32(textBoxAy.Text);
-                Matrix.Matrix_B_x = Convert.ToUInt32(textBoxBx.Text);
-                Matrix.Matrix_B_y = Convert.ToUInt32(textBoxBy.Text);
+                Matrix.Matrix_A_x = Convert.ToUInt32(dimensionTextBox.Text);
+                Matrix.Matrix_A_y = Convert.ToUInt32(dimensionTextBox.Text);
+                Matrix.Matrix_B_x = Convert.ToUInt32(dimensionTextBox.Text);
+                Matrix.Matrix_B_y = Convert.ToUInt32(dimensionTextBox.Text);
 
                 Matrix.Random_min = 0;
                 Matrix.Random_max = 10;
 
-                //Matrix.Potok_Count_Screen = Convert.ToUInt32(textBoxMaxPotok.Text);
 
-                Matrix Work = new Matrix();
-                Work.instal();
+                Matrix workMatrix = new Matrix();
+                workMatrix.Generate();
 
-                Thread GlobalThread = new Thread(Work.MenegerPotokov);
+                Thread GlobalThread = new Thread(workMatrix.MenegerPotokov);
                 GlobalThread.Start();
                 timer1.Start();
             }
@@ -69,11 +68,11 @@ namespace Lab2
                     plot.Points.AddXY(i + 1, Matrix.TimePotok[i]);
                 }
 
-                buttonRun.Enabled = true;
+                runButton.Enabled = true;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void refreshButton_Click(object sender, EventArgs e)
         {
             //найти список доступных серверов
             WhoThis.SendEvent();
@@ -82,7 +81,7 @@ namespace Lab2
             WhoThis.Close();
 
 
-            lock (s)
+            lock (locker)
             {
                 WhoThis.FindIpList.Clear();
                 richTextBoxServerList.Text = "";
@@ -98,7 +97,6 @@ namespace Lab2
 
                         if (!flag) { WhoThis.FindIpList.Add(WhoThis.FullIpList[i]); }
                     }
-                    //WhoThis.FindIpList.AddRange(WhoThis.FullIpList.GroupBy);
                     WhoThis.FullIpList.Clear();
                 }
 
