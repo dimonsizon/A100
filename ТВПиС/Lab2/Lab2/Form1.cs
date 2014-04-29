@@ -108,8 +108,6 @@ namespace Lab2
                     Matrix.userThreadCount = CountClient;
                 }
             }
-
         }
-
     }
 }

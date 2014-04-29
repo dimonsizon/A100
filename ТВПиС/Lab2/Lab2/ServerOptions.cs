@@ -128,12 +128,10 @@ namespace Lab2
                         {
                             Matrix.stopEvent.Set();
                             Matrix.NextMatrixData_null();
-
                         }
                         else
                         {
                             Matrix.stopThread++;
-
                         }
                         sender.Send(Encoding.UTF8.GetBytes("<END>"));
 
@@ -149,7 +147,6 @@ namespace Lab2
                         Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
                         Matrix.MatrixData_C[xy[0], xy[1]] = Convert.ToInt32(Data);
                     }
-
                 }
 
                 sender.Shutdown(SocketShutdown.Both);
@@ -175,7 +172,6 @@ namespace Lab2
     }
     public class MatrixString
     {
-
         public static string MatrixToString(int number)
         {
             String bufer = null;
@@ -203,8 +199,6 @@ namespace Lab2
                 }
                 return bufer;
             }
-
         }
-
     }
 }

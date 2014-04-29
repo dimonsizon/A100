@@ -213,9 +213,9 @@ namespace ConsoleServer
 
             if (number == 1)
             {//a
-                for (int i = 0; i < dimension; i++)//строка
+                for (int i = 0; i < dimension; i++)
                 {
-                    for (int j = 0; j < dimension; j++)//столбцы
+                    for (int j = 0; j < dimension; j++)
                     {
                         while (true)
                         {
@@ -238,9 +238,9 @@ namespace ConsoleServer
             }
             else
             {//b
-                for (int i = 0; i < dimension; i++)//строка
+                for (int i = 0; i < dimension; i++)
                 {
-                    for (int j = 0; j < dimension; j++)//столбцы
+                    for (int j = 0; j < dimension; j++)
                     {
                         while (true)
                         {
@@ -256,7 +256,6 @@ namespace ConsoleServer
                                 n++;
                                 break;
                             }
-
                         }
                     }
                 }

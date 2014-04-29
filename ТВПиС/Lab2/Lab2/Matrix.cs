@@ -67,35 +67,26 @@ namespace Lab2
                 for (int y = 0; y < dimension; y++)
                 {
                     MatrixData_A[x, y] = Rnd.Next(Random_min, Random_max);
-
                 }
             }
             for (int x = 0; x < dimension; x++)
             {
                 for (int y = 0; y < dimension; y++)
                 {
-
                     MatrixData_B[x, y] = Rnd.Next(Random_min, Random_max);
                 }
             }
         }
 
-        /// <summary>
-        /// событие для запуска всех потоков
-        /// </summary>
+        // событие для запуска всех потоков
         public static EventWaitHandle startEvent;
-        /// <summary>
-        /// событие сработает по оканчанию всех потоков
-        /// </summary>
+        // событие сработает по оканчанию всех потоков
         public static EventWaitHandle stopEvent;
         public static int threadCount = 0;
         public static int stopThread = 0;
-        /// <summary>
-        /// уравление рабочими потоками
-        /// </summary>
+
         public void ThreadManager()
         {
-
             for (int n = 1; n <= maxThreadCount; n++)
             {
                 Thread.Sleep(1500); //пауза между подходами
@@ -106,7 +97,6 @@ namespace Lab2
                 stopThread = 1;
                 threadCount = n;
 
-                //создать неообходимое кол-во потоков под клиента
                 Thread[] threads = new Thread[n];
 
                 MyConnectionToServer.MaxNow = n;
@@ -115,7 +105,6 @@ namespace Lab2
                 {
                     threads[i] = new Thread(MyConnectionToServer.NewConnection);
                     threads[i].Start();
-
                 }
 
                 Thread.Sleep(2500);
@@ -138,7 +127,7 @@ namespace Lab2
 
             int[] t = new int[3];
 
-            //возвратить координату, для умножения. если нет то послать 0.
+            //возвратить координату, для умножения, если нет то послать 0.
             if (NextXY > Matrix_MaxXY)
             {
                 t[2] = 1; //x
@@ -156,10 +145,8 @@ namespace Lab2
                 {
                     NextX++;
                 }
-
             }
             NextXY++;
-
 
             return t;
         }
@@ -169,7 +156,6 @@ namespace Lab2
             NextXY = 1;
             NextX = 0;
             NextY = 0;
-
         }
     }
 }
