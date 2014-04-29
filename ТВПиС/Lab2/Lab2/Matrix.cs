@@ -98,6 +98,7 @@ namespace Lab2
 
             for (int n = 1; n <= maxThreadCount; n++)
             {
+                Thread.Sleep(1500); //пауза между подходами
                 startEvent = new ManualResetEvent(false);
                 stopEvent = new ManualResetEvent(false);
                 System.Diagnostics.Stopwatch tick = new System.Diagnostics.Stopwatch();

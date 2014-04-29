@@ -10,29 +10,22 @@ namespace ConsoleServer
 {
     class Program
     {
-        /// <summary>
-        /// порт на котором будет прослушивать сервер на предмет входяшего броткаста от клиента.
-        /// </summary>
-        public static int ServerLocalPort_Slushaem = 65000;
-        /// <summary>
-        /// порт на котором программа будет взаимодействовать с клиентом.
-        /// </summary>
-        public static int ServerLocalPort_Work = 7100;
+        // порт на котором будет прослушивать сервер на предмет входяшего броткаста от клиента.
+        public static int ServerPort_Listen = 65000;
+        // порт на котором программа будет взаимодействовать с клиентом.
+        public static int ServerPort_WorkWithClient = 7100;
         public static Boolean working = false;
-
 
         static void Main(string[] args)
         {
             Thread workThread = new Thread(work);
             workThread.Start();
 
-            Console.WriteLine("Поиск сервера....");
-            //Creates a UdpClient for reading incoming data.
-            UdpClient receivingUdpClient = new UdpClient(ServerLocalPort_Slushaem);
-            //Creates an IPEndPoint to record the IP Address and port number of the sender. 
-            // The IPEndPoint will allow you to read datagrams sent from any source.
+            Console.WriteLine("Search server...");
+            //UdpClient for reading incoming data.
+            UdpClient receivingUdpClient = new UdpClient(ServerPort_Listen);
             IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
-            Console.WriteLine("Готово!");
+            Console.WriteLine("Ready! =)");
             while (true)
             {
                 if (working) { break; }
@@ -43,7 +36,7 @@ namespace ConsoleServer
 
                     string returnData = Encoding.UTF8.GetString(receiveBytes);
 
-                    byte[] data = Encoding.UTF8.GetBytes(ServerLocalPort_Work.ToString());
+                    byte[] data = Encoding.UTF8.GetBytes(ServerPort_WorkWithClient.ToString());
                     receivingUdpClient.Send(data, data.Length, new IPEndPoint(RemoteIpEndPoint.Address, RemoteIpEndPoint.Port));
                 }
                 catch (Exception e)
@@ -54,19 +47,14 @@ namespace ConsoleServer
             receivingUdpClient.Close();
         }
 
-
         public static void work()
         {
             //установка для сокета локальную конечную точку
-            //IPHostEntry ipHost = Dns.Resolve("localhost");
-            //IPAddress ipAdrr = ipHost.AddressList[0];
-            //IPEndPoint ipEndPoint = new IPEndPoint(ipAdrr, ServerLocalPort_Work);
-            IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Any, ServerLocalPort_Work);
+            IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Any, ServerPort_WorkWithClient);
 
             //создаем сокет tcp/ip 
             Socket MySocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            //назначаем сокет локальной конечной точке и
-            // слушаем входящии сокеты
+            //назначаем сокет локальной конечной точке и слушаем входящии сокеты
 
             try
             {
@@ -76,9 +64,6 @@ namespace ConsoleServer
                 //начинаем слушать соеденения
                 while (true)
                 {
-                    //  Console.WriteLine("Срервер ожидает поключения на " + ipEndPoint);
-                    //Console.WriteLine("Сервер ожидает соеденения. Готов работать");
-
                     Socket handler = MySocket.Accept();
                     byte[] bytes = new byte[1024 * 8 * 8];
                     int ByteRec = 0;
@@ -87,12 +72,12 @@ namespace ConsoleServer
                     ByteRec = handler.Receive(bytes);
                     Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
                     Matrix work = new Matrix();
-                    work.InstalRazmer(1, Data);
+                    work.InstalSize(1, Data);
                     handler.Send(Encoding.UTF8.GetBytes("<OK>"));
 
                     ByteRec = handler.Receive(bytes);
                     Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
-                    work.InstalRazmer(2, Data);
+                    work.InstalSize(2, Data);
                     handler.Send(Encoding.UTF8.GetBytes("<OK>"));
 
                     work.InstalMatrixMamory();
@@ -100,14 +85,14 @@ namespace ConsoleServer
                     ByteRec = handler.Receive(bytes);
                     Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
                     Console.WriteLine(Data);
-                    work.ZapolnitMatrix(1, Data);
+                    work.FillMatrix(1, Data);
                     handler.Send(Encoding.UTF8.GetBytes("<OK>"));
 
 
                     ByteRec = handler.Receive(bytes);
                     Data = Encoding.UTF8.GetString(bytes, 0, ByteRec);
                     Console.WriteLine(Data);
-                    work.ZapolnitMatrix(2, Data);
+                    work.FillMatrix(2, Data);
                     handler.Send(Encoding.UTF8.GetBytes("<OK>"));
 
                     while (true)
@@ -121,18 +106,14 @@ namespace ConsoleServer
                         }
                         else if (Data != "")//счет и ответ
                         {
-                            handler.Send(Encoding.UTF8.GetBytes(work.Schet(Data)));
+                            handler.Send(Encoding.UTF8.GetBytes(work.CalculationMatrix(Data)));
                         }
-
                     }
-
 
                     handler.Shutdown(SocketShutdown.Both);
                     handler.Close();
                     handler.Dispose();
                 }
-
-
 
             }
             catch (Exception e)
@@ -140,7 +121,6 @@ namespace ConsoleServer
                 Console.WriteLine(e.ToString());
             }
 
-            //отработали....в топку
             MySocket.Dispose();
             working = false;
         }
@@ -148,15 +128,12 @@ namespace ConsoleServer
 
     public class Matrix
     {
-        //размерность матриц
         public static UInt32 dimension = 0;
 
         public Int32[,] MatrixData_A;
         public Int32[,] MatrixData_B;
 
-
-
-        public void InstalRazmer(int number, String Data)
+        public void InstalSize(int number, String Data)
         {
             bool flag = true;
             String str = null;
@@ -220,9 +197,7 @@ namespace ConsoleServer
                         str = null;
                     }
                 }
-
             }
-
         }
 
         public void InstalMatrixMamory()
@@ -231,7 +206,7 @@ namespace ConsoleServer
             MatrixData_B = new Int32[dimension, dimension];
         }
 
-        public void ZapolnitMatrix(int number, String Data)
+        public void FillMatrix(int number, String Data)
         {
             string buf = null;
             int n = 0;
@@ -260,7 +235,6 @@ namespace ConsoleServer
                         }
                     }
                 }
-                //тут написать функцию, преобразование строки в матрицу АААА
             }
             else
             {//b
@@ -286,12 +260,10 @@ namespace ConsoleServer
                         }
                     }
                 }
-                //тут написать функцию, преобразование строки в матрицу ББББ
             }
-
         }
 
-        public String Schet(String data)
+        public String CalculationMatrix(String data)
         {
             int x = 0;
             int y = 0;
